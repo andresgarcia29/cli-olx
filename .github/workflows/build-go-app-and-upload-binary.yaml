@@ -40,7 +40,7 @@ jobs:
     steps:
       - id: get-version
         name: Get Version From Semantic Release
-        uses: Limitless-AI/gha-common-workflows/actions/get-version@main
+        uses: andresgarcia29/gha-common-workflows/actions/get-version@main
         with:
           github-token: ${{ secrets.GH_TOKEN }}
 
@@ -81,6 +81,6 @@ jobs:
     steps:
       - id: release
         name: Release With Semantic Release
-        uses: Limitless-AI/gha-common-workflows/actions/release@main
+        uses: andresgarcia29/gha-common-workflows/actions/release@main
         with:
           github-token: ${{ secrets.GH_TOKEN }}
