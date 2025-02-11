@@ -54,7 +54,7 @@ jobs:
       id-token: "write"
 
     steps:
-      - id: build-go-app-and-upload-binary:
+      - id: build-go-app-and-upload-binary
         name: Build And Push Docker Image
         uses: andresgarcia29/gha-common-workflows/actions/build-go-app-and-upload-binary@main
         with:
