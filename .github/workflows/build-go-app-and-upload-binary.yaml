@@ -34,6 +34,10 @@ jobs:
     name: Get Next Version
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: "read"
+      id-token: "write"
+
     outputs:
       version: ${{ steps.get-version.outputs.version }}
 
