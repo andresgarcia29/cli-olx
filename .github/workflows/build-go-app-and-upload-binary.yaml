@@ -63,7 +63,7 @@ jobs:
         uses: andresgarcia29/gha-common-workflows/actions/build-go-app-and-upload-binary@main
         with:
           aws_region: us-east-1
-          aws_ecr_role_arn: arn:aws:iam::123456789012:role/service-role/AmazonEC2ContainerRegistryReadOnly
+          aws_ecr_role_arn: arn:aws:iam::455222299354:role/github_oidc
           aws_bucket_name: agm-open-applications
           go_version: 1.23
           app_name: olx
