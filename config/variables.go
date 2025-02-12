@@ -8,7 +8,7 @@ type AuthenticationClient struct {
 	RedirectUrl  string
 }
 
-var VERSION string
+var VERSION string = "dev"
 
 const (
 	SIGNER_S3_URL         = "https://t1ey25e0i2.execute-api.us-east-1.amazonaws.com"

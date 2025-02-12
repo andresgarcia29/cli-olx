@@ -29,6 +29,13 @@ var statusCmd = &cobra.Command{
 		} else {
 			fmt.Println("[❌] Not authenticated")
 		}
+
+		if helpers.IsConfigPathIsCreated() {
+			fmt.Println("[✅] Init Configuration")
+		} else {
+			fmt.Println("[❌] Not Init Configuration")
+		}
+
 		fmt.Println("[📦] Version: ", config.VERSION)
 	},
 }
