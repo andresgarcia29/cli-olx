@@ -47,32 +47,10 @@ jobs:
         uses: andresgarcia29/gha-common-workflows/actions/get-version@main
         with:
           github-token: ${{ secrets.GH_TOKEN }}
-
-  build-go-app-and-upload-binary:
-    name: Build & Push Binary
-    runs-on: ubuntu-latest
-    needs: [get-version]
-
-    permissions:
-      contents: "read"
-      id-token: "write"
-
-    steps:
-      - id: build-go-app-and-upload-binary
-        name: Build And Push Docker Image
-        uses: andresgarcia29/gha-common-workflows/actions/build-go-app-and-upload-binary@main
-        with:
-          aws_region: us-east-1
-          aws_ecr_role_arn: arn:aws:iam::455222299354:role/github_oidc
-          aws_bucket_name: agm-open-applications
-          go_version: 1.23
-          app_name: olx
-          app_version: ${{ needs.get-version.outputs.version }}
-
   release:
     name: Release
     runs-on: ubuntu-latest
-    needs: [build-go-app-and-upload-binary]
+    needs: [get-version]
 
     permissions:
       contents: write

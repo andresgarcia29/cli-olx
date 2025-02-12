@@ -52,12 +52,14 @@ func getTokenRequest(code string, srv *http.Server) error {
 		return err
 	}
 
-	os.Create("auth.json")
 	file, err := os.Create(config.OLX_CONFIG_PATH)
 	if err != nil {
 		return err
 	}
-	file.Write(body)
+	_, err = file.Write(body)
+	if err != nil {
+		return err
+	}
 
 	srv.Shutdown(context.Background())
 	return nil
