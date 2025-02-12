@@ -35,7 +35,9 @@ builds:
         {{- end }}
 
 archives:
-  - formats: [ 'tar.gz' ]
+  - id: olx
+    builds: ["olx"]
+    formats: [ 'tar.gz' ]
     name_template: >-
       {{ .ProjectName }}_
       {{- title .Os }}_
