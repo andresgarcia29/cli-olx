@@ -8,12 +8,13 @@ type AuthenticationClient struct {
 	RedirectUrl  string
 }
 
+var VERSION string
+
 const (
 	SIGNER_S3_URL         = "https://t1ey25e0i2.execute-api.us-east-1.amazonaws.com"
 	DOWNLOAD_OPERATION    = "download"
 	UPLOAD_OPERATION      = "upload"
 	EPHIMERAL_SERVER_PORT = "8888"
-	VERSION               = "0.0.1"
 	SHORTENER_URL         = "https://short.corvux.co"
 )
 

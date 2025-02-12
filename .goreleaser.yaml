@@ -15,6 +15,11 @@ builds:
     goarch:
       - amd64
       - arm64
+    ldflags: >-
+      -s -w
+      -X github.com/andresgarcia29/cli-uploader/config.VERSION={{.Version}}
+      -X github.com/andresgarcia29/cli-uploader/config.COMMIT={{.Commit}}
+      -X github.com/andresgarcia29/cli-uploader/config.DATE={{.Date}}
     env:
       - CGO_ENABLED=0
       - >-
@@ -78,14 +83,3 @@ brews:
       owner: andresgarcia29
       name: homebrew-agm
       branch: main
-
-    dependencies:
-      - name: git
-        os: mac
-      - name: zsh
-        type: optional
-      - name: fish
-        version: v1.2.3
-      - name: elvish
-        type: optional
-        version: v1.2.3
