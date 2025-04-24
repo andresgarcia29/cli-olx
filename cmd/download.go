@@ -5,7 +5,6 @@ import (
 	"log"
 
 	"github.com/andresgarcia29/cli-uploader/auth"
-	"github.com/andresgarcia29/cli-uploader/config"
 	"github.com/andresgarcia29/cli-uploader/s3"
 	"github.com/spf13/cobra"
 )
@@ -35,13 +34,11 @@ var cmdDownload = &cobra.Command{
 	Long:  `Download files from the aws s3 bucket with a signed url`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		service := s3.Service{
-			ServerUrl: config.SIGNER_S3_URL,
-		}
+		s3SignerService := s3.S3SignerService{}
 
 		downloadFilePathDestination = addKeyToThePath(downloadFilePathDestination, downloadS3Key)
 
-		err := service.DownloadFile(downloadS3Key, downloadFilePathDestination, auth.Login())
+		err := s3SignerService.DownloadFile(downloadS3Key, downloadFilePathDestination, auth.Login())
 		if err != nil {
 			log.Fatalln(err)
 		}

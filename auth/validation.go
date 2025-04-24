@@ -16,22 +16,43 @@ func isLocalAuthentication() (bool, error) {
 		return false, nil
 	}
 	return true, err
-
 }
 
-func isTokenValid(tokenString string) bool {
-	token, _, err := new(jwt.Parser).ParseUnverified(tokenString, jwt.MapClaims{})
+type User struct {
+	Expiration int64  `json:"exp"`
+	Username   string `json:"username"`
+}
+
+func GetUser() (*User, error) {
+	var user User
+
+	file, err := os.Open(config.OLX_CONFIG_PATH)
 	if err != nil {
-		return false
+		return nil, err
+	}
+	defer file.Close()
+
+	var authCreds AuthenticationCredentials
+	fileContent, err := io.ReadAll(file)
+	if err != nil {
+		return nil, err
+	}
+	json.Unmarshal(fileContent, &authCreds)
+
+	token, _, err := new(jwt.Parser).ParseUnverified(authCreds.AccessToken, jwt.MapClaims{})
+	if err != nil {
+		return nil, err
 	}
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok {
+		if expVal, ok := claims["username"].(string); ok {
+			user.Username = expVal
+		}
 		if expVal, ok := claims["exp"].(float64); ok {
-			expTime := time.Unix(int64(expVal), 0)
-			return time.Now().Before(expTime)
+			user.Expiration = int64(expVal)
 		}
 	}
-	return false
+	return &user, nil
 }
 
 func isTokenStillValid() (bool, *AuthenticationCredentials, error) {
@@ -48,10 +69,13 @@ func isTokenStillValid() (bool, *AuthenticationCredentials, error) {
 	}
 	json.Unmarshal(fileContent, &authCreds)
 
-	if isTokenValid(authCreds.AccessToken) {
-		return true, &authCreds, nil
+	user, err := GetUser()
+	if err != nil {
+		return false, nil, err
 	}
-	return false, &authCreds, nil
+
+	expTime := time.Unix(int64(user.Expiration), 0)
+	return time.Now().Before(expTime), &authCreds, nil
 }
 
 func IsAuthenticated() bool {

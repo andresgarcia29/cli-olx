@@ -12,11 +12,12 @@ import (
 	"github.com/andresgarcia29/cli-uploader/config"
 )
 
-type Service struct {
+type S3SignerService struct {
 	ServerUrl string
 }
 
-func (s *Service) getSignUrl(key, operation, access_token string) (*S3ResponseSignUrl, error) {
+func (s *S3SignerService) getSignUrl(key, operation, access_token string) (*S3ResponseSignUrl, error) {
+	
 	S3RequestSignUrl := S3RequestSignUrl{
 		Key: key,
 	}
@@ -25,7 +26,7 @@ func (s *Service) getSignUrl(key, operation, access_token string) (*S3ResponseSi
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, s.ServerUrl+"/"+operation, bytes.NewBuffer(payload))
+	req, err := http.NewRequest(http.MethodPost, config.SIGNER_S3_URL+"/"+operation, bytes.NewBuffer(payload))
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +62,7 @@ func (s *Service) getSignUrl(key, operation, access_token string) (*S3ResponseSi
 	return &S3ResponseSignUrl, nil
 }
 
-func (s *Service) DownloadFile(key, filePath, authorization_token string) error {
+func (s *S3SignerService) DownloadFile(key, filePath, authorization_token string) error {
 	downloadSignUrl, err := s.getSignUrl(key, config.DOWNLOAD_OPERATION, authorization_token)
 	if err != nil {
 		return err
@@ -96,7 +97,7 @@ func (s *Service) DownloadFile(key, filePath, authorization_token string) error 
 	return nil
 }
 
-func (s *Service) UploadFile(key, filePath, authorization_token string) (string, error) {
+func (s *S3SignerService) UploadFile(key, filePath, authorization_token string) (string, error) {
 	uploadSignUrl, err := s.getSignUrl(key, config.UPLOAD_OPERATION, authorization_token)
 	if err != nil {
 		return "", err

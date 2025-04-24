@@ -3,6 +3,7 @@ package shortener
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/andresgarcia29/cli-uploader/config"
@@ -37,8 +38,9 @@ func (s *Shortener) CreateShortUrl() (string, error) {
 		return "", err
 	}
 	defer resp.Body.Close()
+
 	if resp.StatusCode != http.StatusOK {
-		return "", err
+		return "", errors.New("failed to create short URL: " + resp.Status)
 	}
 
 	shortenerResponse := ShortenerResponse{}

@@ -15,7 +15,7 @@ const (
 	DOWNLOAD_OPERATION    = "download"
 	UPLOAD_OPERATION      = "upload"
 	EPHIMERAL_SERVER_PORT = "8888"
-	SHORTENER_URL         = "https://short.corvux.co"
+	SHORTENER_URL         = "https://short-service.corvux.co"
 )
 
 var OLX_CONFIG_PATH string = os.Getenv("HOME") + "/.olx/auth.json"
@@ -24,3 +24,4 @@ var AuthenticationClientConfig = AuthenticationClient{
 	ClientSecret: "c7dp96t3t0rfcclb96p6ng4odpiojqp3f4fppj51ev5nt5l7sf3",
 	RedirectUrl:  "http://localhost:" + EPHIMERAL_SERVER_PORT + "/code",
 }
+var S3SignerServiceAllowOperations = []string{"upload", "download"}
