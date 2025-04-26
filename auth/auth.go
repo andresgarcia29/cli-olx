@@ -26,7 +26,7 @@ func Authenticate() (bool, error) {
 	if isLocalAuthenticated {
 		ok, authCreds, err := isTokenStillValid()
 		if err != nil {
-			log.Fatalln("Error to authenticate", err)
+			log.Fatalln("The token is not longer valid", err)
 		}
 
 		if ok {

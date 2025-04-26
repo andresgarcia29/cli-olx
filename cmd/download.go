@@ -34,11 +34,11 @@ var cmdDownload = &cobra.Command{
 	Long:  `Download files from the aws s3 bucket with a signed url`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		s3SignerService := s3.S3SignerService{}
+		s3Service := s3.S3Service{}
 
 		downloadFilePathDestination = addKeyToThePath(downloadFilePathDestination, downloadS3Key)
 
-		err := s3SignerService.DownloadFile(downloadS3Key, downloadFilePathDestination, auth.Login())
+		err := s3Service.DownloadFile(downloadS3Key, downloadFilePathDestination, auth.Login())
 		if err != nil {
 			log.Fatalln(err)
 		}

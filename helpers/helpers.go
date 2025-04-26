@@ -3,6 +3,7 @@ package helpers
 import (
 	"net/http"
 	"os"
+	"path/filepath"
 	"time"
 )
 
@@ -20,4 +21,19 @@ func IsConfigPathIsCreated() bool {
 		return false
 	}
 	return true
+}
+
+func GetAllFilesInPath(folder_path string) ([]string, error) {
+	var files []string
+	err := filepath.WalkDir(folder_path, func(path string, d os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		files = append(files, path)
+
+		return nil
+	})
+
+	return files, err
 }

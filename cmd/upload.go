@@ -32,11 +32,11 @@ var cmdUpload = &cobra.Command{
 			return
 		}
 
-		s3SignerService := s3.S3SignerService{}
+		s3Service := s3.S3Service{}
 		fileName := strings.Split(uploadFilePath, "/")[len(strings.Split(uploadFilePath, "/"))-1]
 		fileNameUserPath := username.Username + "/downloads/" + fileName
 
-		url, err := s3SignerService.UploadFile(fileNameUserPath, uploadFilePath, auth.Login())
+		url, err := s3Service.UploadFile(fileNameUserPath, uploadFilePath, auth.Login())
 		if err != nil {
 			fmt.Println("[❌] Error to upload the file:", err)
 			return

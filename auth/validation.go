@@ -19,8 +19,9 @@ func isLocalAuthentication() (bool, error) {
 }
 
 type User struct {
-	Expiration int64  `json:"exp"`
-	Username   string `json:"username"`
+	Expiration  int64  `json:"exp"`
+	Username    string `json:"username"`
+	AccessToken string `json:"access_token"`
 }
 
 func GetUser() (*User, error) {
@@ -38,6 +39,8 @@ func GetUser() (*User, error) {
 		return nil, err
 	}
 	json.Unmarshal(fileContent, &authCreds)
+
+	user.AccessToken = authCreds.AccessToken
 
 	token, _, err := new(jwt.Parser).ParseUnverified(authCreds.AccessToken, jwt.MapClaims{})
 	if err != nil {
