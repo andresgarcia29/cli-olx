@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -94,6 +93,10 @@ func getRefreshTokenRequest(refresh_token string) error {
 	}
 	defer res.Body.Close()
 
+	if res.StatusCode != http.StatusOK {
+		return errors.New("[❌] Error to refresh token")
+	}
+
 	var authCreds AuthenticationCredentials
 	err = json.NewDecoder(res.Body).Decode(&authCreds)
 	if err != nil {
@@ -104,11 +107,6 @@ func getRefreshTokenRequest(refresh_token string) error {
 	authCredsData, err := json.Marshal(authCreds)
 	if err != nil {
 		return err
-	}
-
-	if res.StatusCode != http.StatusOK {
-		fmt.Println("[ℹ️] Error to refresh token body: ", res.Body)
-		return errors.New("[❌] error to refresh token")
 	}
 
 	file, err := os.Create(config.OLX_CONFIG_PATH)

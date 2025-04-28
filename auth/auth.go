@@ -80,7 +80,7 @@ func Login() string {
 		err := getRefreshTokenRequest(authCreds.RefreshToken)
 		if err != nil {
 			fmt.Println(err)
-			fmt.Println("[🙏] Please execute '''olx auth''' to start the authentication process")
+			fmt.Println("[🙏] Please execute <olx auth> to start the authentication process")
 			os.Exit(1)
 		}
 		fmt.Println("[🔄] The token was refreshed correctly")

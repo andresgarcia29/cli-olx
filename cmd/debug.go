@@ -12,16 +12,11 @@ func init() {
 }
 
 var debugCmd = &cobra.Command{
-	Use:   "debug",
-	Short: "debug",
-	Long:  "debug",
+	Use:              "debug",
+	Short:            "debug",
+	Long:             "debug",
+	PersistentPreRun: helpers.PreChecker,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("! -- Debug -- !")
-		lines, err := helpers.GetIgnoreFileSection("/Users/andres/.zshrc")
-		if err != nil {
-			fmt.Println("Error getting user:", err)
-			return
-		}
-		fmt.Println(lines)
 	},
 }

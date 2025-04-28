@@ -47,7 +47,7 @@ var deviceBackupCmd = &cobra.Command{
 	Long:  "Backup device files to S3",
 	Run: func(cmd *cobra.Command, args []string) {
 		auth.Login()
-		fmt.Println("! -- [Only Works in MacOS] -- !")
+		fmt.Println("[⚠️] Only For MacOS")
 
 		user, err := auth.GetUser()
 		if err != nil {
@@ -66,7 +66,7 @@ var restoreBackupCmd = &cobra.Command{
 	Long:  "Restore device files from S3",
 	Run: func(cmd *cobra.Command, args []string) {
 		auth.Login()
-		fmt.Println("! -- [Only Works in MacOS] -- !")
+		fmt.Println("[⚠️] Only For MacOS")
 
 		user, err := auth.GetUser()
 		if err != nil {
